@@ -5,6 +5,7 @@
 package riscv.core
 
 import chisel3._
+import chisel3.Bool
 import chisel3.util.Cat
 import riscv.CPUBundle
 import riscv.Parameters
