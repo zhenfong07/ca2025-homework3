@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 // MyCPU is freely redistributable under the MIT License. See the file
 // "LICENSE" for information on usage and redistribution of this file.
 
@@ -102,7 +101,7 @@ class MemoryAccess extends Module {
         InstructionsTypeL.lhu -> Mux(
           mem_address_index === 0.U,
           Cat(Fill(16, 0.U), data(15, 0)),
-          Cat(Fill(16, 0.U), data(15, 0))
+          Cat(Fill(16, 0.U), data(31, 16))
         ),
 
         // LW: Load full word, no extension needed (completed example)
