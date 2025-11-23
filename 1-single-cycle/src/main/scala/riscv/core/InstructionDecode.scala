@@ -167,7 +167,7 @@ class InstructionDecode extends Module {
   val rs1         = instruction(19, 15)
   val rs2         = instruction(24, 20)
   val rd          = instruction(11, 7)
-
+  
   val isLoad   = opcode === InstructionTypes.Load
   val isStore  = opcode === InstructionTypes.Store
   val isOpImm  = opcode === InstructionTypes.OpImm
@@ -180,6 +180,7 @@ class InstructionDecode extends Module {
   val usesRs1  = isLoad || isStore || isOpImm || isOp || isBranch || isJalr
   val usesRs2  = isStore || isOp || isBranch
   val regWrite = isLoad || isOpImm || isOp || isLui || isAuipc || isJal || isJalr
+
 
   // ============================================================
   // [CA25: Exercise 2] Control Signal Generation
@@ -254,6 +255,9 @@ class InstructionDecode extends Module {
   io.reg_write_enable       := regWrite
   io.reg_write_address      := rd
 
+  io.regs_reg1_read_address := Mux(opcode === Instructions.lui, 0.U(Parameters.PhysicalRegisterAddrWidth), rs1)
+  io.regs_reg2_read_address := rs2
+
   // ============================================================
   // [CA25: Exercise 1] Immediate Extension - RISC-V Instruction Encoding
   // ============================================================
@@ -265,6 +269,7 @@ class InstructionDecode extends Module {
   //   Requires sign extension to 32 bits
   //   Hint: Use Fill() to replicate sign bit instruction(31)
   //
+  
   val immI = Cat(
     Fill(Parameters.DataBits - 12, instruction(31)),  // Sign extension: replicate bit 31 twenty times
     instruction(31, 20)                                // Immediate: bits [31:20]
@@ -329,5 +334,6 @@ class InstructionDecode extends Module {
       ImmediateKind.J.asUInt -> immJ
     )
   )
+
   io.ex_immediate := immediate
 }

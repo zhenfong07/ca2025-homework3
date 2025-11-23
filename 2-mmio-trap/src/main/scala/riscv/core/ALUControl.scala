@@ -76,7 +76,7 @@ class ALUControl extends Module {
           //   funct7[5] = 0 → ADD
           //   funct7[5] = 1 → SUB
           // TODO: Complete Mux selection logic
-          InstructionsTypeR.add_sub -> ?,
+          InstructionsTypeR.add_sub -> Mux(funct7(5),ALUFunctions.sub,ALUFunctions.add)
 
           InstructionsTypeR.sll     -> ALUFunctions.sll,
           InstructionsTypeR.slt     -> ALUFunctions.slt,
