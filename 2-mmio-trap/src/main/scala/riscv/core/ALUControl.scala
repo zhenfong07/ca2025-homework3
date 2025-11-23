@@ -63,7 +63,7 @@ class ALUControl extends Module {
           //   funct7[5] = 0 → SRLI (logical right shift)
           //   funct7[5] = 1 → SRAI (arithmetic right shift)
           // TODO: Complete Mux selection logic
-          InstructionsTypeI.sri   -> Mux(funct7(5),ALUFunctions.srai,ALUFunctions.srli)
+          InstructionsTypeI.sri   -> Mux(io.funct7(5),ALUFunctions.sra,ALUFunctions.srl)
         )
       )
     }
@@ -76,7 +76,7 @@ class ALUControl extends Module {
           //   funct7[5] = 0 → ADD
           //   funct7[5] = 1 → SUB
           // TODO: Complete Mux selection logic
-          InstructionsTypeR.add_sub -> Mux(funct7(5),ALUFunctions.sub,ALUFunctions.add)
+          InstructionsTypeR.add_sub -> Mux(io.funct7(5),ALUFunctions.sub,ALUFunctions.add),
 
           InstructionsTypeR.sll     -> ALUFunctions.sll,
           InstructionsTypeR.slt     -> ALUFunctions.slt,
@@ -91,7 +91,7 @@ class ALUControl extends Module {
           //   funct7[5] = 0 → SRL (logical right shift)
           //   funct7[5] = 1 → SRA (arithmetic right shift)
           // TODO: Complete Mux selection logic
-          InstructionsTypeR.sr      -> Mux(funct7(5),io.ALUFunctions.sra,io.ALUFunctions.srl)
+          InstructionsTypeR.sr      -> Mux(io.funct7(5),ALUFunctions.sra,ALUFunctions.srl)
         )
       )
     }

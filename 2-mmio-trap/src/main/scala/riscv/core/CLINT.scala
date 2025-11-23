@@ -106,9 +106,9 @@ class CLINT extends Module {
     io.csr_bundle.mstatus_write_data :=
       Cat(
         io.csr_bundle.mstatus(31, 8),
-        ?, // mpie ← mie (save current interrupt enable)
+        mie, // mpie ← mie (save current interrupt enable)
         io.csr_bundle.mstatus(6, 4),
-        ?, // mie ← 0 (disable interrupts)
+        0.U(1.W), // mie ← 0 (disable interrupts)
         io.csr_bundle.mstatus(2, 0)
       )
     io.csr_bundle.mepc_write_data := instruction_address
@@ -176,9 +176,9 @@ class CLINT extends Module {
     io.csr_bundle.mstatus_write_data :=
       Cat(
         io.csr_bundle.mstatus(31, 8),
-        ?, // mpie ← 1 (reset MPIE)
+        1.U(1.W), // mpie ← 1 (reset MPIE)
         io.csr_bundle.mstatus(6, 4),
-        ?, // mie ← mpie (restore interrupt enable)
+        mpie, // mie ← mpie (restore interrupt enable)
         io.csr_bundle.mstatus(2, 0)
       )
     io.csr_bundle.mepc_write_data     := io.csr_bundle.mepc
